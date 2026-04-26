@@ -108,7 +108,6 @@ Once the raw data was loaded into Microsoft Excel, the data was analysed and gro
 
 This grouping exercise formed the core foundation for defining the dimension and fact tables that would follow.
 
-**The screenshots below demonstrates the actions taken to group the data:**
 
 ![Reference image](/screen_shots/Raw%20pc%20data.PNG)
 
@@ -132,7 +131,6 @@ Microsoft Word, serving as a high-level blueprint that communicates
 the overall structure of the data warehouse to both technical and 
 non-technical stakeholders.
 
-**The screenshot below demonstrates the conceptual modeling diagram:**
 
 ![Reference image](/screen_shots/Conceptual%20Modeling%20for%20PC%20Data%20Sales.PNG)
 
@@ -280,7 +278,7 @@ cleaning, transformation, and pipeline execution only.
 
 | User Role | Permissions Granted |
 |---|---|
-| Data Engineer | Full read and write access (db_datareader, db_datawriter). Responsible for data cleaning, transformation, and migrating cleaned data to the D(db_datareader, db_datawriter)ata Warehouse. |
+| Data Engineer | Full read and write access (db_datareader, db_datawriter). Responsible for data cleaning, transformation, and migrating cleaned data to the Data Warehouse. |
 
 ![Reference image](/screen_shots/data_engineer_user.PNG)
 
@@ -332,7 +330,7 @@ The below screenshot shows one of the codes used to create the **Store Procedure
 
 Developed as part of a data warehousing and business intelligence project, 
 demonstrating the full data modeling lifecycle from raw data to a structured, 
-query-ready Star Schema — showcasing practical skills in Data Engineering and 
-Business Intelligence, and Data Analytics
+query-ready Star Schema — showcasing practical skills in Data Engineering,  
+Business Intelligence and Data Analytics
 
 
