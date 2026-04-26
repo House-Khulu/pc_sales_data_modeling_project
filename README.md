@@ -17,15 +17,26 @@ from source to warehouse.
 
 ## Table of Contents
 
-- [Project Structure](#project-structure)
-- [Tools and Technologies Used](#tools-and-technologies-used)
-- [1. Raw Data Extraction from CSV](#1-raw-data-extraction-from-csv)
-- [2. Data Grouping and Table Identification in Excel](#2-data-grouping-and-table-identification-in-excel)
-- [3. Conceptual Modeling for PC Data Sales](#3-conceptual-modeling-for-pc-data-sales)
-- [4. Logical Modeling (Star Schema)](#4-logical-modeling-star-schema)
-- [5. Physical Modeling in SSMS](#5-physical-modeling-in-ssms)
-- [6. Stored Procedures](#6-stored-procedures)
-- [7. Security — User Roles and Access Control](#7-security--user-roles-and-access-control)
+- [pc\_sales\_data\_modeling\_project](#pc_sales_data_modeling_project)
+  - [PC Sales Data Modeling — Star Schema Project](#pc-sales-data-modeling--star-schema-project)
+  - [Overview](#overview)
+  - [Table of Contents](#table-of-contents)
+  - [Project Structure](#project-structure)
+  - [Tools and Technologies Used](#tools-and-technologies-used)
+  - [1. Raw Data Extraction from CSV](#1-raw-data-extraction-from-csv)
+  - [2. Data Grouping and Table Identification in Excel](#2-data-grouping-and-table-identification-in-excel)
+  - [3. Conceptual Modeling for PC Data Sales](#3-conceptual-modeling-for-pc-data-sales)
+  - [4. Logical Modeling (Star Schema)](#4-logical-modeling-star-schema)
+    - [Fact Table — Fact Sales](#fact-table--fact-sales)
+    - [Dimension Tables](#dimension-tables)
+  - [5. Physical Modeling in SSMS](#5-physical-modeling-in-ssms)
+    - [Fact Table — Fact Sales](#fact-table--fact-sales-1)
+    - [Dimension Tables](#dimension-tables-1)
+  - [6. Security — User Roles and Access Control](#6-security--user-roles-and-access-control)
+    - [Computer Staging Database — User Roles](#computer-staging-database--user-roles)
+    - [Computer Data Warehouse Database — User Roles](#computer-data-warehouse-database--user-roles)
+    - [Implementation](#implementation)
+  - [7. Stored Procedures](#7-stored-procedures)
 
 ---
 ## Project Structure
@@ -87,7 +98,7 @@ The project begins with a raw CSV file containing unstructured PC sales transact
 
 **The screenshot below shows the raw pc data :**
 
-![Reference image](/Pc%20Data%20Modeling%20Project/screen_shots/Raw%20data.PNG)
+![Reference image](/screen_shots/Raw%20data.PNG)
 
 ---
 
@@ -99,17 +110,17 @@ This grouping exercise formed the core foundation for defining the dimension and
 
 **The screenshots below demonstrates the actions taken to group the data:**
 
-![Reference image](/Pc%20Data%20Modeling%20Project/screen_shots/Raw%20pc%20data.PNG)
+![Reference image](/screen_shots/Raw%20pc%20data.PNG)
 
 
 **The Fact Sales Table :**
 
-![Reference image](/Pc%20Data%20Modeling%20Project/screen_shots/Fact%20table.PNG)
+![Reference image](/screen_shots/Fact%20table.PNG)
 
 
 **The Dimension Tables :**
 
-![Reference image](/Pc%20Data%20Modeling%20Project/screen_shots/Dim%20Tables.PNG)
+![Reference image](/screen_shots/Dim%20Tables.PNG)
 
 
 ---
@@ -123,7 +134,7 @@ non-technical stakeholders.
 
 **The screenshot below demonstrates the conceptual modeling diagram:**
 
-![Reference image](/Pc%20Data%20Modeling%20Project/screen_shots/Conceptual%20Modeling%20for%20PC%20Data%20Sales.PNG)
+![Reference image](/screen_shots/Conceptual%20Modeling%20for%20PC%20Data%20Sales.PNG)
 
 At the center sits the **Fact Sales** table, surrounded by 
 **10 dimension tables** that provide descriptive context to each 
@@ -150,7 +161,7 @@ The logical model was constructed using **Draw.io** and represents a detailed St
 
 The **diagram** below illustrates the relationships between each dimension table and the central Fact Sales table :
 
-![Reference image](/Pc%20Data%20Modeling%20Project/star_schema/pc_sales_%20data%20modeling_drawio.png)
+![Reference image](/star_schema/pc_sales_%20data%20modeling_drawio.png)
 
 
 The core of the schema is the **Fact Sales** table, identified by a primary key **Sales_ID**. 
@@ -193,7 +204,7 @@ each dimension table, enabling multi-dimensional analysis.
 
 The physical implementation was carried out in **SQL Server Management Studio (SSMS)**, where **two databases** were created: 
 
-![Reference image](/Pc%20Data%20Modeling%20Project/screen_shots/Creating%20Databases.PNG)
+![Reference image](/screen_shots/Creating%20Databases.PNG)
 
 - **Computer Staging** — Used as the **working environment(messy data)** for building and loading the schema.
 - **Computer Data Warehouse** — The target data warehouse database.
@@ -203,11 +214,11 @@ Within the **Computer Staging** database, all dimension tables and the fact tabl
 
 This demonstrates the **code** used to **create the dim_location table:**
 
-![Reference image](/Pc%20Data%20Modeling%20Project/screen_shots/Creating%20Dim%20location%20table.PNG)
+![Reference image](/screen_shots/Creating%20Dim%20location%20table.PNG)
 
 And this demonstrates the **code** used to **create the fact_sales table :**
 
-![Reference image](/Pc%20Data%20Modeling%20Project/screen_shots/Creating%20Fact%20sales%20table.PNG)
+![Reference image](/screen_shots/Creating%20Fact%20sales%20table.PNG)
 
 
 - **Primary Keys (PKs)** were added to all tables to uniquely identify each record.
@@ -271,7 +282,7 @@ cleaning, transformation, and pipeline execution only.
 |---|---|
 | Data Engineer | Full read and write access (db_datareader, db_datawriter). Responsible for data cleaning, transformation, and migrating cleaned data to the D(db_datareader, db_datawriter)ata Warehouse. |
 
-![Reference image](/Pc%20Data%20Modeling%20Project/screen_shots/data_engineer_user.PNG)
+![Reference image](/screen_shots/data_engineer_user.PNG)
 
 ---
 
@@ -288,7 +299,7 @@ created here only, ensuring they interact with trusted data exclusively.
 | Data Analyst | SELECT on all tables only. Cannot modify, insert, delete or execute any stored procedures. Restricted to querying and analysing the cleaned warehouse data. |
 | Data Scientist | SELECT on all tables only. Cannot modify, insert, delete or execute any stored procedures. Restricted to querying and analysing data for modelling and analytical purposes. |
 
-![Reference image](/Pc%20Data%20Modeling%20Project/screen_shots/da_ds_&_sm_users.PNG)
+![Reference image](/screen_shots/da_ds_&_sm_users.PNG)
 
 
 ### Implementation
@@ -302,7 +313,7 @@ within the Computer Staging database as follows:
   protect data integrity
 
 
-![Reference image](/Pc%20Data%20Modeling%20Project/screen_shots/user_roles.PNG)
+![Reference image](/screen_shots/user_roles.PNG)
 
 ---
 
@@ -312,7 +323,7 @@ Still within the **Computer Staging database**, **Stored Procedures** were creat
 
 The below screenshot shows one of the codes used to create the **Store Procedure for dim_customer**
 
-![Reference image](/Pc%20Data%20Modeling%20Project/screen_shots/Stored%20procedure%20dim_customer.PNG)
+![Reference image](/screen_shots/Stored%20procedure%20dim_customer.PNG)
 
 
 ---
