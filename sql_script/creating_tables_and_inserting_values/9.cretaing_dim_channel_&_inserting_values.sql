@@ -1,32 +1,30 @@
----------------------------------------------
---Creating a stored procedure for dim_channel
----------------------------------------------
 
-CREATE PROCEDURE [sp_create_dim_channel]
-
-AS
-BEGIN
 ------------------------------------------------
 --creating dim_channel tabe with the primary key
 ------------------------------------------------
 
-DROP TABLE [computer_staging].[dbo].[dim_channel];
 
-CREATE TABLE [computer_staging].[dbo].[dim_channel](
-    [Channel_ID] INT IDENTITY (1,1) PRIMARY KEY NOT NULL,
-	[Channel] [nvarchar](250) NOT NULL
+IF NOT EXISTS (SELECT * FROM sys.tables
+WHERE NAME = 'dim_channel')
+BEGIN
+    CREATE TABLE [computer_staging].[dbo].[dim_channel](
+    [channel_id] INT IDENTITY (1,1) PRIMARY KEY NOT NULL,
+	[channel] [nvarchar](250) NOT NULL
 );
+END;
 
 --------------------------------------
 --Inserting values into the dim_channel
 --------------------------------------
 
 INSERT INTO [computer_staging].[dbo].[dim_channel](
-            [Channel])
+            [channel])
 
-SELECT DISTINCT [Channel]
+SELECT DISTINCT
+
+ LOWER(LTRIM(RTRIM(channel))) AS channel
 FROM [computer_staging].[dbo].[raw_pc_data];
-END;
 
-EXEC [sp_create_dim_channel]
+SELECT * FROM [computer_staging].[dbo].[dim_channel];
+
 

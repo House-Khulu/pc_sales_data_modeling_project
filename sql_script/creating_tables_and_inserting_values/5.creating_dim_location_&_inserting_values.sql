@@ -1,16 +1,14 @@
-----------------------------------------------
---Creating a stored procedure for dim_location
-----------------------------------------------
+--------------------------------
+--creating a dim_location table
+--------------------------------
 
-CREATE PROCEDURE [sp_create_dim_location]
-
-AS
+IF NOT EXISTS (
+    SELECT *
+    FROM sys.tables
+    WHERE name = 'dim_location'
+)
 BEGIN
---------------------------------------------------
---creating dim_location table with the primary key
---------------------------------------------------
-
- CREATE TABLE [computer_staging].[dbo].[dim_location](
+    CREATE TABLE [computer_staging].[dbo].[dim_location](
         [location_id] INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
         [continent] NVARCHAR(250) NOT NULL,
         [country_or_state] NVARCHAR(250) NOT NULL,
@@ -34,3 +32,6 @@ LOWER(LTRIM(RTRIM(continent))) AS continent,
 LOWER(LTRIM(RTRIM(country_or_state))) AS country_or_state,
 LOWER(LTRIM(RTRIM(province_or_city))) AS province_or_state
 FROM [computer_staging].[dbo].[raw_pc_data];
+
+SELECT * 
+FROM [computer_staging].[dbo].[dim_location];

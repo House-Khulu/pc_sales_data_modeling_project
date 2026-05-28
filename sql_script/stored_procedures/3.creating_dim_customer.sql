@@ -10,32 +10,34 @@ BEGIN
 --creating dim_customer table with the primary key
 --------------------------------------------------
 
-DROP TABLE [computer_staging].[dbo].[dim_customer]
-
 CREATE TABLE [computer_staging].[dbo].[dim_customer](
     [customer_id] INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	[Customer_Name] [nvarchar](250) NOT NULL,
-	[Customer_Surname] [nvarchar](250) NOT NULL,
-	[Customer_Contact_Number] [nvarchar](250) NOT NULL,
-	[Customer_Email_Address] [nvarchar](250) NOT NULL
+	[customer_name] [nvarchar](250) NOT NULL,
+	[customer_surname] [nvarchar](250) NOT NULL,
+	[customer_contact_number] [nvarchar](250) NOT NULL,
+	[customer_email_address] [nvarchar](250) NOT NULL
 );
-
+END;
 ----------------------------------------
 --Inserting values into the dim_customer
 ----------------------------------------
 
-INSERT INTO [computer_staging].[dbo].[dim_customer](
-            [Customer_Name],
-			[Customer_Surname],
-			[Customer_Contact_Number],
-			[Customer_Email_Address])
+INSERT INTO [computer_staging].[dbo].[dim_customer] (
 
-SELECT DISTINCT 
-            [Customer_Name],
-			[Customer_Surname],
-			[Customer_Contact_Number],
-			[Customer_Email_Address]
-FROM [computer_staging].[dbo].[raw_pc_data];
-END;
+    customer_name,
+    customer_surname,
+    customer_contact_number,
+    customer_email_address
+
+)
+
+SELECT DISTINCT
+
+    LOWER(LTRIM(RTRIM(Customer_Name))) AS customer_name,
+    LOWER(LTRIM(RTRIM(Customer_Surname))) AS customer_surname,
+    LOWER(LTRIM(RTRIM(Customer_Contact_Number))) AS customer_contact_number,
+    LOWER(LTRIM(RTRIM(Customer_Email_Address))) AS customer_email_address
+
+FROM[computer_staging].[dbo].[raw_pc_data];
 
 EXEC [sp_create_dim_customer]

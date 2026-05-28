@@ -1,0 +1,97 @@
+Please follow and apply the below instructions and use the two png files, and PLEASE NOTE THIS IS FOR A JUNIOR DATA ENGINEER LEVEL:
+
+1. Make the project more end-to-end
+Right now, the repo looks more like modeling + table creation than a full data engineering pipeline.
+
+Improve by:
+
+adding a true ETL flow from raw CSV → staging → dimensions → fact.
+showing data ingestion logic and transformation rules.
+including a load process that maps raw rows to dimension keys before populating the fact table.
+
+
+2. Add stronger data quality and validation
+Junior data engineering work shines when you show that you care about data quality.
+
+Suggested additions:
+
+null/missing value handling
+duplicate detection
+type validation / formatting checks
+row counts before/after loads
+basic data profiling results
+
+3. Improve SQL design and robustness
+Your SQL is functional, but it can be more professional.
+
+Key improvements:
+
+use the clause "IF NOT EXISTS" instead of unconditional DROP TABLE across all sql script folders
+use proper data types:
+money/decimal for prices
+date/datetime for dates
+varchar/nvarchar with sensible lengths for text
+avoid using INT NOT NULL for everything
+add NOT NULL only where business rules require it
+add constraints like unique keys or default values where meaningful
+use consistent naming conventions for tables/columns preferably use the SNAKE CASE
+
+4. Fix the fact load logic
+The stored procedure sp_create_fact_pc_sales currently:
+
+creates the fact table
+inserts measures only
+does not populate the foreign key IDs from dimensions
+That means the fact table is not fully linked to the dimensions. A stronger implementation would:
+
+load customer/date/payment/etc. keys from dimension lookup tables
+join raw rows to dimensions
+insert both FKs and measures in one load step
+
+5. Improve README / documentation
+Your README is good, but make it portfolio-ready by adding:
+
+How to run this project
+which scripts to execute and in what order
+supported SQL Server version
+expected output/results
+sample SELECT queries or business use cases
+a short “What I learned” section
+Also align the README project structure with the actual repo folders. Right now the README describes a different structure than what exists.
+
+6. Show analytics/value
+A portfolio project should demonstrate why the warehouse matters.
+
+Add:
+
+sample analytical SQL queries
+example dashboards or BI questions
+business metrics such as total sales by region, sales by channel, or customer lifetime value
+
+
+7. Add automation / workflow
+As a junior data engineer, automation is a differentiator.
+
+Good additions:
+
+a script to run the whole pipeline
+a batch job / stored procedure orchestration
+even a simple sqlcmd command list or PowerShell wrapper
+if possible, mention tools such as SQL SERVER AGENT
+
+
+8. Highlight security more clearly
+You already have security scripts, which is great.
+
+To improve:
+
+clarify the role separation between staging and warehouse
+document which users can read/write what
+show least-privilege access for ETL vs reporting
+Quick wins
+Add a single README section: Run order
+Add a script that loads CSV into staging
+Add one or two sample BI queries
+Improve one stored procedure to fully build the fact table with FKs
+Add a small data quality checklist
+

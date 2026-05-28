@@ -10,28 +10,26 @@ BEGIN
 --creating dim_salesperson tabe with the primary key
 ----------------------------------------------------
 
-DROP TABLE [computer_staging].[dbo].[dim_salesperson]
-
-CREATE TABLE [computer_staging].[dbo].[dim_salesperson](
-    [Sales_person_id] INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	[Sales_Person_Name] [nvarchar](250) NOT NULL,
-	[Sales_Person_Department] [nvarchar](250) NOT NULL
-)
-
+    CREATE TABLE [computer_staging].[dbo].[dim_sales_person](
+    [sales_person_id] INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[sales_person_name] [nvarchar](250) NOT NULL,
+	[sales_person_department] [nvarchar](250) NOT NULL
+);
+END;
 
 -------------------------------------------
 --Inserting values into the dim_salesperson
 -------------------------------------------
 
-INSERT INTO [computer_staging].[dbo].[dim_salesperson](
-            [Sales_Person_Name],
-			[Sales_Person_Department])
+INSERT INTO [computer_staging].[dbo].[dim_sales_person](
+            [sales_person_name],
+			[sales_person_department])
 
 SELECT DISTINCT 
-            [Sales_Person_Name],
-			[Sales_Person_Department]
+
+        LOWER(LTRIM(RTRIM(sales_person_name))) AS sales_person_name,
+		LOWER(LTRIM(RTRIM(sales_person_department))) AS sales_person_department
 FROM [computer_staging].[dbo].[raw_pc_data];
 
-SELECT * FROM [computer_staging].[dbo].[dim_salesperson];
-END;
+
 

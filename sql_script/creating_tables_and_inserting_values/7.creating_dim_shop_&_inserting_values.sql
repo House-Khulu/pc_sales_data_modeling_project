@@ -2,13 +2,15 @@
 --creating dim_shop tabe with the primary key
 ---------------------------------------------
 
-DROP TABLE [computer_staging].[dbo].[dim_shop];
-
-CREATE TABLE [computer_staging].[dbo].[dim_shop](
-    [Shop_Id] INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	[Shop_Name] [nvarchar](250) NOT NULL,
-	[Shop_Age] [nvarchar](250) NOT NULL
+IF NOT EXISTS (SELECT * FROM sys.tables
+WHERE NAME = 'dim_shop')
+BEGIN
+    CREATE TABLE [computer_staging].[dbo].[dim_shop](
+    [shop_id] INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	[shop_name] [nvarchar](250) NOT NULL,
+	[shop_age] [nvarchar](250) NOT NULL
 );
+END;
 
 
 ------------------------------------
@@ -16,12 +18,12 @@ CREATE TABLE [computer_staging].[dbo].[dim_shop](
 ------------------------------------
 
 INSERT INTO [computer_staging].[dbo].[dim_shop](
-            [Shop_Name],
-			[Shop_Age])
+            [shop_name],
+			[shop_age])
 
 SELECT DISTINCT 
-            [Shop_Name],
-			[Shop_Age]
+        LOWER(LTRIM(RTRIM(shop_name))) AS shop_name,
+		LOWER(LTRIM(RTRIM(shop_age))) AS shop_age
 FROM [computer_staging].[dbo].[raw_pc_data];
 
 SELECT * FROM [computer_staging].[dbo].[dim_shop];           

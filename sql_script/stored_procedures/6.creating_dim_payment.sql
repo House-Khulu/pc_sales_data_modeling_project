@@ -11,21 +11,19 @@ BEGIN
 ------------------------------------------------
 
 
-DROP TABLE [computer_staging].[dbo].[dim_payment];
-
-CREATE TABLE [computer_staging].[dbo].[dim_payment](
-    [Payment_ID] INT IDENTITY (1,1) PRIMARY KEY NOT NULL,
-	[Payment_Method] [nvarchar](250) NOT NULL
+    CREATE TABLE [computer_staging].[dbo].[dim_payment](
+    [payment_id] INT IDENTITY (1,1) PRIMARY KEY NOT NULL,
+	[payment_method] [nvarchar](250) NOT NULL
 );
-
+END;
 
 ---------------------------------------
 --Inserting values into the dim_payment
 ---------------------------------------
 
-INSERT INTO [computer_staging].[dbo].[dim_payment]([Payment_Method])
-SELECT DISTINCT [Payment_Method]
+INSERT INTO [computer_staging].[dbo].[dim_payment]([payment_method])
+SELECT DISTINCT
+     LOWER(LTRIM(RTRIM(payment_method))) AS payment_method
 FROM [computer_staging].[dbo].[raw_pc_data];
 
 SELECT * FROM [computer_staging].[dbo].[dim_payment];
-END;
