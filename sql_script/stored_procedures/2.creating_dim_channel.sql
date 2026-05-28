@@ -10,20 +10,20 @@ BEGIN
 --creating dim_channel tabe with the primary key
 ------------------------------------------------
 
-DROP TABLE [computer_staging].[dbo].[dim_channel];
-
-CREATE TABLE [computer_staging].[dbo].[dim_channel](
-    [Channel_ID] INT IDENTITY (1,1) PRIMARY KEY NOT NULL,
-	[Channel] [nvarchar](250) NOT NULL
+    CREATE TABLE [computer_staging].[dbo].[dim_channel](
+    [channel_id] INT IDENTITY (1,1) PRIMARY KEY NOT NULL,
+	[channel] [nvarchar](250) NOT NULL
 );
+END;
 
 --------------------------------------
 --Inserting values into the dim_channel
 --------------------------------------
 
 INSERT INTO [computer_staging].[dbo].[dim_channel](
-            [Channel])
+            [channel])
 
-SELECT DISTINCT [Channel]
+SELECT DISTINCT
+
+ LOWER(LTRIM(RTRIM(channel))) AS channel
 FROM [computer_staging].[dbo].[raw_pc_data];
-END;
